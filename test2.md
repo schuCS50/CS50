@@ -19,6 +19,7 @@ This table includes all of our ESG indicator datapoints (which are country/year 
 
 #### Table: users
 This table includes all of our users and their hashed passwords.
+*Reused from CS50 Finance
 
 #### Table: saved_charts
 This table includes a given user's saved chart information including the indicator, minYear, and maxYear.
@@ -58,6 +59,68 @@ This function calls import_countries and import_indicators to get all macro info
 
 ### Flask Application & Helpers (application.py)
 
+#### Helpers: Apology & Login Required
+The helpers file adds two functions reused from CS50 Finance that render an apology to the user and allow us to require a login to view specific areas of our application.
+
+#### Application Function: login
+This function logs a user into our application and updates the session with their information. It checks our users table to see if the username and hashed password match and then logs the user in and redirects them to our index if so. If not, it shows an appropriate error.
+*Reused from CS50 Finance
+
+#### Application Function: register
+This function allows our user to register for our application. If they don't register correctly it shows them an appropriate error. If they register correctly their information is saved in our users table and they are redirected to index/login.
+*Reused from CS50 Finance
+
+#### Application Function: logout
+This function clears a user's session and logs them out.
+*Reused from CS50 Finance
+
+#### Application Function: index
+This function renders our index.html homepage which displays all of the available indicators to our user.
+
+#### Application Function: chart
+##### GET
+If reached by GET, our chart function renders the chart_form.html page to our user to collect their requested chart settings.
+
+##### POST
+If reached by POST (when our user submits the chart form), this function validates that the user input appropriate chart information (indicators, country(ies), minYear, and maxYear), and renders an error if they did not. If they did, then it pulls the relevant (settings indicated) information from our database to render a chart. It then formats and passes than information to chart.html for display to the user.
+
+#### Application Function: savedChart
+##### GET
+If reached by GET, our savedChart function renders the savedChart.html page with the users past saved chart information.
+
+##### POST
+If reached by POST (when the user selects a chart for recreation), this function validates that the form was correctly submitted (selects 1 prior chart), and then pulls the relevant information from the DB and formats & passes it to chart.html for display to the user.
+
 ### HTML templates
 
+#### layout.html
+This file is the layout base for our othe html files in the project. We deine our broader css files for the project as well as the navbar.
+*Reused from CS50 Finance
+
+#### login.html
+This file extends layout.html and includes a form for the user to log in to our application.
+*Reused from CS50 Finance
+
+#### register.html
+This file extends layout.html and includes a form for the user to register for our application.
+*Reused from CS50 Finance
+
+#### apology.html
+This file extends layout.html and renders our errors.
+*Reused from CS50 Finance
+
+#### index.html
+This file extends layout.html and is the first page the user sees when they log in. It renders all indicators that we have access to in conjunction with our index function.
+
+#### chart_form.html
+This file extends layout.html and renders a form of chart settings for our users to submit. It is rednered with the chart get function and with the information passed through there will render a dropdown of all indicators, a list of all countries, and the min/max year option.
+
+#### savedChart.html
+This file extends layout.html and renders a list of all previous chart settings the user has used.
+
 #### chart.html & ChartJS
+This file extends layout.html and renders the chart based on the POST method of both the savedChart and chart function. It uses chartJS (more detail below) to rener a chart to the user with the data returned from the chart settings they selected. It also offers the option to download the chart rendered in the canvas element.
+
+##### ChartJS
+Chart JS is an open source library that enables the creation of JS + html charts on webpages. We use the line chart options for our chart display.
+https://www.chartjs.org/
