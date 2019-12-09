@@ -5,6 +5,23 @@
 ### Project Overview
 The design of this project has four major components: database, data load, flask application, and html templates. In process order, we needed to create our database and load the data we needed. Then we can create our application and html templates to operationalize the application. More detail on each component is given below.
 
+### General Design Thoughts:
+#### Design Overview
+Our application has the below design
+* Load data into database with Python script
+* Database that allows us to store ESG datapoint and user data
+* Flask application that allows a user to register, log in, and logout
+* Application also allows a logged in user to create a chart with settings or rebuild account saved charts
+
+#### DB vs API
+Our general design is making the ESG data available in our database so our flask application can quickly access it. Another option was directly pulling from the API each time we needed to render a chart, but it seemed more extensible to load the data into our DB once and then pull from the DB on demand.
+
+#### Line Charts
+We started with line charts to display data with the chartJS library.
+
+#### Saving & Image Downloading
+We save the imput information of a chart to our user's account for chart recreation. We also allow them to download a png to their computer.
+
 ### Database Design (project.db)
 Our database includes 6 tables, by far the largest is the indicator_values table which contains the majority of our ESG data.
 
